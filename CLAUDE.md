@@ -40,6 +40,7 @@ com.example.accounting
  │   ├─ journal    Journal, JournalId, JournalLine, JournalType, PostedJournal, JournalRepository
  │   ├─ period     AccountingPeriod, AccountingPeriodId, PeriodStatus, AccountingPeriodRepository
  │   ├─ asset      FixedAsset, FixedAssetId, DepreciationPolicy と各実装, FixedAssetRepository
+ │   ├─ consolidation  CompanyId, IndividualStatements, Subsidiary, 連結会社間の取引, ConsolidationWorksheet, 連結 B/S・P/L
  │   └─ statement  Ledger, TrialBalance, BalanceSheet, IncomeStatement, StatementOfChangesInEquity
  ├─ service        ClosingService, FinancialStatementFactory, AdjustingEntryService など
  └─ exception      AccountingException
@@ -146,9 +147,13 @@ public record ClosingResult(
 
 手形(約束手形のみ)、現金過不足、有価証券、固定資産の売却、株主資本等変動計算書(2級の頻出論点)、精算表、C/F(間接法。前期末 B/S が必要)、商品有高帳。
 
+### 連結会計(2026-10-19 に範囲へ追加)
+
+2級レベル(資本連結、債権債務・取引高の相殺、未実現利益の消去、連結精算表・連結財務諸表)。連結修正仕訳は個別の帳簿に記帳せず、個別財務諸表から毎期導出する。設計と要確認事項は `EXTENSION_DESIGN.md` のフェーズ14。2026-10-19 に解答例なしで実装済み(未検証。`UNVERIFIED_RULES.md` の 14-x)。 持分法・持分変動・連結 C/F・連結の税効果は範囲外。
+
 ## 範囲外(作らない)
 
-工業簿記(原価計算)、連結会計、税効果会計、リース会計、外貨建取引、本支店会計、為替手形、簡易課税・インボイス、申告書の作成、Spring 向けモジュール(domain が固まってから別モジュールとして検討)。
+工業簿記(原価計算)、税効果会計、リース会計、外貨建取引、本支店会計、為替手形、簡易課税・インボイス、申告書の作成、Spring 向けモジュール(domain が固まってから別モジュールとして検討)。
 
 ## 実装前に開発者へ確認すること(未決事項)
 
@@ -156,7 +161,7 @@ public record ClosingResult(
 2. **`AccountCategory` の具体的な一覧**: B/S・P/L の標準区分。損益勘定と繰越利益剰余金の置き場所に関わる。
 3. **`FixedAsset` の累計償却額**: 保存するか、仕訳から導出するか。(フェーズ3で必要になった時点で決める)
 4. **会計期間**: 1年固定か、変則決算を許すか。(暫定: 次期は1年)
-5. **範囲**: 「単体会社の商業簿記まで」に絞る前提でよいか。
+5. **範囲**: 「単体会社の商業簿記まで」に絞る前提でよいか。(2026-10-19: 2級の連結会計を範囲に追加)
 
 ## 作業の進め方
 

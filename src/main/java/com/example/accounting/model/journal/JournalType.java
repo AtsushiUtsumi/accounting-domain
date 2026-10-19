@@ -13,5 +13,7 @@ public enum JournalType {
     /** 再振替仕訳。 */
     REVERSING,
     /** 取消(赤黒処理の逆仕訳)。 */
-    REVERSAL
+    REVERSAL,
+    /** 連結修正仕訳。個別の帳簿には記帳しない({@link PostedJournal#post} で受け付けない)。 */
+    CONSOLIDATION
 }

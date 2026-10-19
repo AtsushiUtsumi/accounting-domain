@@ -88,10 +88,11 @@ public record Worksheet(Map<Account, Row> rows) {
     private static Placement placementOf(AccountCategory category) {
         return switch (category) {
             case CURRENT_ASSET, FIXED_ASSET, CURRENT_LIABILITY, FIXED_LIABILITY, CAPITAL, RETAINED_EARNINGS,
-                    VALUATION_AND_TRANSLATION_ADJUSTMENTS ->
+                    VALUATION_AND_TRANSLATION_ADJUSTMENTS, NON_CONTROLLING_INTERESTS ->
                     Placement.BALANCE_SHEET;
             case SALES, COST_OF_SALES, SG_AND_A, NON_OPERATING_INCOME, NON_OPERATING_EXPENSE,
-                    EXTRAORDINARY_INCOME, EXTRAORDINARY_LOSS, INCOME_TAX_EXPENSE -> Placement.INCOME_STATEMENT;
+                    EXTRAORDINARY_INCOME, EXTRAORDINARY_LOSS, INCOME_TAX_EXPENSE,
+                    NON_CONTROLLING_INTERESTS_PROFIT -> Placement.INCOME_STATEMENT;
             case PROFIT_AND_LOSS, SUSPENSE -> Placement.NONE;
         };
     }

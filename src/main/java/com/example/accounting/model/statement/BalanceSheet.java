@@ -37,7 +37,8 @@ public record BalanceSheet(Map<Account, Money> assets, Map<Account, Money> liabi
             switch (account.category()) {
                 case CURRENT_ASSET, FIXED_ASSET -> assets.put(account, balance);
                 case CURRENT_LIABILITY, FIXED_LIABILITY -> liabilities.put(account, balance);
-                case CAPITAL, RETAINED_EARNINGS, VALUATION_AND_TRANSLATION_ADJUSTMENTS -> equity.put(account, balance);
+                case CAPITAL, RETAINED_EARNINGS, VALUATION_AND_TRANSLATION_ADJUSTMENTS, NON_CONTROLLING_INTERESTS ->
+                        equity.put(account, balance);
                 default -> {
                     // P/L の各区分と PROFIT_AND_LOSS(損益勘定)は B/S には表示しない。
                 }

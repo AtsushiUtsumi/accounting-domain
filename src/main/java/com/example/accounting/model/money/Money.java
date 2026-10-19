@@ -23,6 +23,11 @@ public record Money(long amountInYen) implements Comparable<Money> {
         return new Money(-this.amountInYen);
     }
 
+    /** 絶対値。 */
+    public Money abs() {
+        return amountInYen < 0L ? negate() : this;
+    }
+
     public boolean isZero() {
         return amountInYen == 0L;
     }

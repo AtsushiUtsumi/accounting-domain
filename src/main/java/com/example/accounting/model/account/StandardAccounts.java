@@ -482,6 +482,17 @@ public final class StandardAccounts {
     public static final Account COST_OF_SERVICES =
             standard("540", "役務原価", AccountType.EXPENSE, AccountCategory.COST_OF_SALES);
 
+    // ---- 連結会計(フェーズ14)。連結修正仕訳だけで使い、個別の帳簿には出てこない ----
+
+    /** 非支配株主持分。子会社の純資産のうち、親会社以外の株主に帰属する部分。 */
+    public static final Account NON_CONTROLLING_INTERESTS =
+            standard("308", "非支配株主持分", AccountType.EQUITY, AccountCategory.NON_CONTROLLING_INTERESTS);
+
+    /** 非支配株主に帰属する当期純利益。子会社の当期純利益のうち非支配株主の持分。純損失なら貸方に出る。 */
+    public static final Account PROFIT_ATTRIBUTABLE_TO_NON_CONTROLLING_INTERESTS =
+            standard("541", "非支配株主に帰属する当期純利益", AccountType.EXPENSE,
+                    AccountCategory.NON_CONTROLLING_INTERESTS_PROFIT);
+
     /** 損益勘定。決算の損益振替専用で、B/S・P/L には出さない。保護される標準科目(最低限)の一つ。 */
     public static final Account PROFIT_AND_LOSS =
             standard("901", "損益", AccountType.EQUITY, AccountCategory.PROFIT_AND_LOSS);
@@ -531,7 +542,8 @@ public final class StandardAccounts {
             DISHONORED_NOTES, NON_TRADE_NOTES_RECEIVABLE, LOSS_ON_SALE_OF_ELECTRONIC_RECEIVABLES,
             OTHER_CAPITAL_SURPLUS, GENERAL_RESERVE, GAIN_ON_BARGAIN_PURCHASE,
             WORK_IN_PROCESS, CONTRACT_ASSETS, CONTRACT_LIABILITIES, REFUND_LIABILITIES, SERVICE_REVENUE,
-            COST_OF_SERVICES
+            COST_OF_SERVICES,
+            NON_CONTROLLING_INTERESTS, PROFIT_ATTRIBUTABLE_TO_NON_CONTROLLING_INTERESTS
     );
 
     private StandardAccounts() {

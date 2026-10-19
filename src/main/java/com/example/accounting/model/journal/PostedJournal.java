@@ -17,7 +17,7 @@ import java.util.Objects;
  * 帳簿に載せるときに {@link #post} を通す。
  *
  * <p>仕訳の種類によって、記帳できる日付がさらに決まっている: 開始仕訳・再振替仕訳は期首の日付、
- * 損益振替仕訳は期末の日付でなければならない。
+ * 損益振替仕訳は期末の日付でなければならない。連結修正仕訳は個別の帳簿に載せないので記帳できない。
  */
 public final class PostedJournal {
 
@@ -47,6 +47,9 @@ public final class PostedJournal {
         }
         if (!period.isOpen()) {
             throw new AccountingException("cannot post to a closed period: " + period.id().value());
+        }
+        if (journal.type() == JournalType.CONSOLIDATION) {
+            throw new AccountingException("consolidation journal cannot be posted to individual books");
         }
         LocalDate date = journal.date();
         if (!period.contains(date)) {
